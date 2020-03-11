@@ -20,3 +20,12 @@ Route::get('/about', 'PageController@about');
 Route::get('/skill', 'PageController@skill');
 
 Route::get('/prolang','PageController@prolang');
+
+
+Route::resource('posts','PostsController');
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
