@@ -4,7 +4,7 @@
 @section('content')
  
 
-{!! Form::open(['action' => 'PostsController@store','method'=>'POST']) !!}
+{!! Form::open(['action' => 'PostsController@store','method'=>'POST','enctype'=>'multipart/form-data']) !!}
 <div class="container">
 <div class="panel panel-info">
 
@@ -37,6 +37,12 @@
 
     {{Form::label('body', 'Discription')}}
     {{Form::textarea('body','',['class'=>'form-control','placeholder'=>'Discription'])}}
+
+    </div>
+    <div class="form-group">
+
+   
+    {{Form::file('post_image',['class'=>'form-control'])}}
 
     </div>
 

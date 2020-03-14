@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
-use BB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +22,8 @@ class PostsController extends Controller
     {
         //
 
-        $post=Post::orderBy('created_at','desc')->get();
-        return view ('posts.index')->with('post',$post);
+        $post = Post::orderBy('created_at', 'desc')->get();
+        return view('posts.index')->with('post', $post);
     }
 
     /**
@@ -29,7 +34,7 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view ('posts.create');
+        return view('posts.create');
     }
 
     /**
@@ -41,23 +46,35 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request ,[
-            'subject'=>'required',
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'body'=>'required',
-            'post_image'=>'image|nullable|max:1024',
-           ]);
+        $this->validate($request, [
+            'subject' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'body' => 'required',
+            'post_image' => 'image|nullable|max:1024',
+        ]);
+        if ($request->hasFile('post_image')) {
+            $filenameWithExtention = $request->file('post_image')->getClientOriginalName();
+            $fileName = pathinfo($filenameWithExtention, PATHINFO_FILENAME);
+            $extension = $request->file('post_image')->getClientOriginalExtension();
+            $fileNameStore = $fileName . '_' . time() . '.' . $extension;
 
-           $post =new Post;
-           $post->subject     =$request->input('subject');
-           $post->firstname   =$request->input('firstname');
-           $post->lastname    =$request->input('lastname');
-           $post->body        =$request->input('body');
-           $post->save();
+            $path = $request->file('post_image')->storeAs('public/post_image', $fileNameStore);
 
+        } else {
+            $fileNameStore = 'no.jpg';
+        }
 
-           return redirect('/posts')->with('Sucess','Done Sucessfully..!');
+        $post = new Post;
+        $post->subject = $request->input('subject');
+        $post->firstname = $request->input('firstname');
+        $post->lastname = $request->input('lastname');
+        $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
+        $post->post_image = $fileNameStore;
+        $post->save();
+
+        return redirect('/posts')->with('Sucess', 'Done Sucessfully..!');
     }
 
     /**
@@ -71,7 +88,7 @@ class PostsController extends Controller
         //
         $post = Post::find($id);
 
-        return view('posts.show')->with('post',$post);
+        return view('posts.show')->with('post', $post);
     }
 
     /**
@@ -85,7 +102,11 @@ class PostsController extends Controller
         //
         $post = Post::find($id);
 
-        return view('posts.edit')->with('post',$post);
+        if (auth()->user()->id !== $post->user_id) {
+            return redirect('/posts')->with('error', 'Unauthorized..!');
+        }
+
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -98,22 +119,38 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request ,[
-            'subject'=>'required',
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'body'=>'required',
-            'post_image'=>'image|nullable|max:1024',
-           ]);
+        $this->validate($request, [
+            'subject' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'body' => 'required',
+
+        ]);
+        if ($request->hasFile('post_image')) {
+            $filenameWithExtention = $request->file('post_image')->getClientOriginalName();
+            $fileName = pathinfo($filenameWithExtention, PATHINFO_FILENAME);
+            $extension = $request->file('post_image')->getClientOriginalExtension();
+            $fileNameStore = $fileName . '_' . time() . '.' . $extension;
+
+            $path = $request->file('post_image')->storeAs('public/post_image', $fileNameStore);
+
+        } else {
+            $fileNAmeStore = 'noImage.jpg';
+        }
+
         $post = Post::find($id);
-        $post->subject     =$request->input('subject');
-        $post->firstname   =$request->input('firstname');
-        $post->lastname    =$request->input('lastname');
-        $post->body        =$request->input('body');
+        $post->subject = $request->input('subject');
+        $post->firstname = $request->input('firstname');
+        $post->lastname = $request->input('lastname');
+        if ($request->hasFile('post_image')) {
+            $post->post_image = $fileNameStore;
+
+        }
+        $post->body = $request->input('body');
+
         $post->save();
 
-
-        return redirect('/posts')->with('Sucess','Done Sucessfully..!');
+        return redirect('/posts')->with('Sucess', 'Done Sucessfully..!');
 
     }
 
@@ -127,7 +164,13 @@ class PostsController extends Controller
     {
         //
         $post = Post::find($id);
+        if (auth()->user()->id !== $post->user_id) {
+            return redirect('/posts')->with('error', 'Unauthorized..!');
+        }
+        if ($post->post_image != 'no.jpg') {
+            Storage::delete('public/post_image/' . $post->post_image);
+        }
         $post->delete();
-        return redirect('/posts')->with('Sucess','Done Sucessfully..!');
+        return redirect('/posts')->with('Sucess', 'Done Sucessfully..!');
     }
 }

@@ -21,7 +21,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
    
 </head>
 <body>
@@ -31,7 +32,9 @@
         
             @include('includes.navbar')
             @include('includes.messages')
+           
             @yield('content')
+            @include('includes.footer')
        
     </div>
      {{-- Js --}}
