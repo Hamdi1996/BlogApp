@@ -1,27 +1,25 @@
 
 
+<div class="footer navbar-fixed-bottom">
+    <p>Copyright &copy;2019-2020.BlogApp. All rights reserved.</p>
+  </div>
 
-<div class="container-fluid text-center bottom-container">
-    <footer>
-        <p>Copyright &copy;2019-2020.BlogApp. All rights reserved.</p>
-    </footer>
-</div>
+
+
 
 <style>
-    footer {
-    text-align: center;
-    height: 50px;
-    color: white;
-    padding: 5px;
-    margin-top: 10px;
-    bottom: 0px;
+ 
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   color: white;
+   height: 50px;
+   padding: 15px;
+   margin-top: 10px;
+   text-align: center;
+   background: #333;
+}
 
-}
-.bottom-container {
-    background: #333;
-    padding:5px;
-    border-top:2px solid #0f0f0f;
-    position:absolute;
-    
-}
 </style>

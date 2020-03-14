@@ -21,9 +21,11 @@
   </div>
   <h5 style="font-size: 26px !important; padding-bottom: 23px">Wide Variety of Products</h5>
   <h6 style="font-size: 20px !important; padding-bottom: 15px">Our inventory is currently the largest on the Internet</h6>
-  <p>The TemplateMonster marketplace is serious about good website design. You can build a site or web project with one of our templates in a few hours that would normally have taken you months building your own custom design. The template is now the chief commodity of almost any business operating online. That said, you can think of our products as the easiest way to build not only a site, but also any possible idea that relies on the use of digital products. You just do more with less. With filters and search properties, it is really easy to find your digital product from among the 26,000 products available in our collection. We’re adding, on average, 350-400 new products with a broad spectrum of types and categories every month. You can sort out the best one for you by using specs and other options. Our product range includes:<br>
+  <p>The TemplateMonster marketplace is serious about good website design. You can build a site or web project with one of our templates in a few hours that would normally have taken you months building your own custom design. The template is now the chief commodity of almost any business operating online. That said, you can think of our products as the easiest way to build not only a site, but also any possible idea that relies on the use of digital products. You just do more with less. With filters and search properties, it is really easy to find your digital product from among the 26,000 products available in our collection.<br>
   </p>
- 
+ <br>
+ <br>
+
   </div>
 </div>
 </div>
