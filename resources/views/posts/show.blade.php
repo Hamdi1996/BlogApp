@@ -22,7 +22,7 @@
         <img src="{{ URL::to('/') }}/images/{{$post->post_image}}" class="img-thumbnail" alt="{{$post->post_image}}" style="width:200px;height:200px" > 
         
         <h2> {{$post->subject}}</h2>
-        <p> {{$post->body}}</p>
+        <p> {!!$post->body!!}</p>
         <span class="label label-warning">created at : {{$post->created_at}}  </span>
         <span class="label label-info">By  {{$post->firstname}}  </span>
 
