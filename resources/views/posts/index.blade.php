@@ -19,7 +19,8 @@
                     <div class="panel-body">
                         <h2> {{$post->subject}}</h2>
 
-                        <img src="/storage/post_image/{{$post->post_image}}"  alt="No Image" style="width:200px;height:200px" class="img-responsive img-thumbnail ">
+                        {{-- <img src="/storage/post_image/{{$post->post_image}}"  alt="No Image" style="width:200px;height:200px" class="img-responsive img-thumbnail "> --}}
+                        <img src="{{ URL::to('/') }}/images/{{$post->post_image}}" class="img-thumbnail" alt="{{$post->post_image}}" style="width:200px;height:200px" > 
 
 
                         <span class="label label-warning">created at : {{$post->created_at}}  </span>

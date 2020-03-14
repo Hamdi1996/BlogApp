@@ -59,7 +59,7 @@ class PostsController extends Controller
             $extension = $request->file('post_image')->getClientOriginalExtension();
             $fileNameStore = $fileName . '_' . time() . '.' . $extension;
 
-            $path = $request->file('post_image')->storeAs('public/post_image', $fileNameStore);
+            $path = $request->file('post_image')->move(base_path().'/public/images', $fileNameStore);
 
         } else {
             $fileNameStore = 'no.jpg';
@@ -131,8 +131,9 @@ class PostsController extends Controller
             $fileName = pathinfo($filenameWithExtention, PATHINFO_FILENAME);
             $extension = $request->file('post_image')->getClientOriginalExtension();
             $fileNameStore = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('post_image')->move(base_path().'/public/images', $fileNameStore);
 
-            $path = $request->file('post_image')->storeAs('public/post_image', $fileNameStore);
+            // $path = $request->file('post_image')->storeAs('public/post_image', $fileNameStore);
 
         } else {
             $fileNAmeStore = 'noImage.jpg';
@@ -168,7 +169,7 @@ class PostsController extends Controller
             return redirect('/posts')->with('error', 'Unauthorized..!');
         }
         if ($post->post_image != 'no.jpg') {
-            Storage::delete('public/post_image/' . $post->post_image);
+            Storage::delete('public/images/'.$post->post_image);
         }
         $post->delete();
         return redirect('/posts')->with('Sucess', 'Done Sucessfully..!');
